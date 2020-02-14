@@ -11,19 +11,19 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using services;
-using StackExchange.Redis;
+//using StackExchange.Redis;
 using StructureMap;
 
 namespace frontend
 {
     public class Startup
     {
-        private static ConnectionMultiplexer RedisConnection { get; set; }
+        //private static ConnectionMultiplexer RedisConnection { get; set; }
         
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            RedisConnection = ConnectionMultiplexer.Connect(Configuration.GetConnectionString("redis"));
+            //RedisConnection = ConnectionMultiplexer.Connect(Configuration.GetConnectionString("redis"));
         }
 
         public IConfiguration Configuration { get; }
@@ -34,9 +34,10 @@ namespace frontend
             services.AddMvc();
             services.AddHangfire(options =>
             {
-                options.UseRedisStorage(RedisConnection);
+               options.UseSqlServerStorage("Data Source=(LocalDB)\\MSSQLLocalDB;Initial Catalog=C:\\USERS\\TCORV\\DOCUMENTS\\SYNUIT.PLATFORM.DEV.MDF;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+                //options.UseRedisStorage(RedisConnection);
             });
-
+         
             var container = new Container();
             container.AddHangfireFrameworkServices();
             

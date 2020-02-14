@@ -15,12 +15,11 @@ namespace worker
             
             container.AddHangfireFrameworkServices();
             
-            var redis = ConnectionMultiplexer.Connect("redis");
+            //var redis = ConnectionMultiplexer.Connect("redis");
 
-            GlobalConfiguration.Configuration.UseRedisStorage(redis);
-            GlobalConfiguration.Configuration.UseActivator(
-                new WorkerActivator(container)
-            );
+            //GlobalConfiguration.Configuration.UseRedisStorage(redis);
+         GlobalConfiguration.Configuration.UseSqlServerStorage("Data Source=(LocalDB)\\MSSQLLocalDB;Initial Catalog=C:\\USERS\\TCORV\\DOCUMENTS\\SYNUIT.PLATFORM.DEV.MDF;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+         GlobalConfiguration.Configuration.UseActivator(new WorkerActivator(container));
 
             using (var server = new BackgroundJobServer())
             {
